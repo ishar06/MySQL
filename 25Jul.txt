@@ -1,0 +1,65 @@
+SHOW DATABASES;
+
+CREATE DATABASE temp1;
+
+DROP DATABASE temp1;
+CREATE DATABASE data_analytics_g9;
+
+USE data_analytics_g9;
+
+CREATE TABLE student(
+rollNo INT PRIMARY KEY,
+name VARCHAR(20) NOT NULL,
+email VARCHAR(50) UNIQUE,
+x_per DECIMAL(5,2) DEFAULT (33.0),
+state VARCHAR(25)
+);
+
+DESC student;
+
+SHOW TABLES;
+
+INSERT INTO student
+VALUES 
+(1,'ABC','abc@ms.com',75.41,'Karnataka');
+
+INSERT INTO student
+(rollNo, name, email, state)
+VALUES
+(2,'BCD','bcd@ms.com','Rajasthan');
+
+SELECT * FROM student;
+
+ALTER TABLE student
+ADD dob DATE;
+
+ALTER TABLE student
+MODIFY email VARCHAR(20);
+
+ALTER TABLE student
+DROP dob;
+
+INSERT INTO student
+VALUES
+(3,'CDE','cde@ms.com',75.24,'Karnataka'),
+(4,'def','def@ms.com',79.41,'Karnataka'),
+(8,'ijk','ijk@ms.com',65.61,'Karnataka'),
+(9,'jkl','jkl@ms.com',57.87,'Karnataka'),
+(10,'AED','ade@ms.com',95.91,'Karnataka');
+
+UPDATE student
+SET x_per = x_per + 2
+WHERE x_per > 70.00;
+
+UPDATE student
+SET x_per = 66.0, state = 'Maharashtra'
+WHERE name = 'def';
+
+DELETE FROM student
+WHERE x_per >= 85.00;
+
+SELECT rollNo, name, email FROM student;
+
+SELECT DISTINCT x_per 
+FROM student;
+
