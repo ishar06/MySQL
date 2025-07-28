@@ -1,0 +1,147 @@
+SHOW DATABASES;
+
+CREATE DATABASE temp1;
+
+DROP DATABASE temp1;
+CREATE DATABASE data_analytics_g9;
+
+USE data_analytics_g9;
+
+CREATE TABLE student(
+rollNo INT PRIMARY KEY,
+name VARCHAR(20) NOT NULL,
+email VARCHAR(50) UNIQUE,
+x_per DECIMAL(5,2) DEFAULT (33.0),
+state VARCHAR(25)
+);
+
+DESC student;
+
+SHOW TABLES;
+
+INSERT INTO student
+VALUES 
+(1,'ABC','abc@ms.com',75.41,'Karnataka');
+
+INSERT INTO student
+(rollNo, name, email, state)
+VALUES
+(2,'BCD','bcd@ms.com','Rajasthan');
+
+SELECT * FROM student;
+
+ALTER TABLE student
+ADD dob DATE;
+
+ALTER TABLE student
+MODIFY email VARCHAR(20);
+
+ALTER TABLE student
+DROP dob;
+
+INSERT INTO student
+VALUES
+(3,'CDE','cde@ms.com',75.24,'Karnataka'),
+(4,'def','def@ms.com',79.41,'Karnataka'),
+(8,'ijk','ijk@ms.com',65.61,'Karnataka'),
+(9,'jkl','jkl@ms.com',57.87,'Karnataka'),
+(10,'AED','ade@ms.com',95.91,'Karnataka');
+
+UPDATE student
+SET x_per = x_per + 2
+WHERE x_per > 70.00;
+
+UPDATE student
+SET x_per = 66.0, state = 'Maharashtra'
+WHERE name = 'def';
+
+DELETE FROM student
+WHERE x_per >= 85.00;
+
+SELECT rollNo, name, email FROM student;
+
+SELECT DISTINCT x_per 
+FROM student;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT rollNo 'Roll Number', name 'Student Name', x_per 'Inter School Percentage' 
+FROM student;
+
+SELECT x_per + 10 AS new_x_per 
+FROM student;
+
+SELECT * FROM student
+WHERE x_per >= 70.00;
+
+SELECT * FROM student;
+
+SELECT rollNo AS RN, x_per AS 10_per, name AS Sname FROM student
+WHERE x_per < 66.00;
+
+SELECT * FROM student
+WHERE x_per >= 33.00 AND x_per <= 74.69;
+
+SELECT * FROM student
+WHERE x_per >= 33.00 && x_per <= 74.69;
+
+SELECT * FROM student
+WHERE x_per BETWEEN 33.00 AND 74.69;
+
+SELECT * FROM student
+WHERE x_per NOT BETWEEN 33.00 AND 74.69;
+
+SELECT * FROM student
+WHERE state IN ('Karnataka', 'Punjab', 'Rajasthan');
+
+SELECT * FROM student
+WHERE email IS NULL;
+
+SELECT * FROM student
+WHERE name LIKE 'a%';
+
+SELECT * FROM student
+WHERE name LIKE '%c%';
+
+SELECT * FROM student
+WHERE name LIKE '_B%';
+
+SELECT * FROM student
+WHERE name LIKE '_D_';
+
+SELECT * FROM student
+ORDER BY x_per;
+
+SELECT * FROM student
+ORDER BY x_per DESC;
+
+SELECT * FROM student
+ORDER BY x_per DESC, rollNo DESC;
+
+SELECT name, email, x_per FROM student
+ORDER BY name DESC
+LIMIT 5;
+
+SELECT name, email, x_per FROM student
+ORDER BY name DESC
+LIMIT 3, 5;
+
+SELECT name, email, x_per FROM students
+ORDER BY name DESC
+LIMIT 5 OFFSET 3;
+
+
+
+
