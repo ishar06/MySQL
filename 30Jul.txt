@@ -1,0 +1,138 @@
+USE data_analytics_g9;
+
+SELECT * FROM student
+WHERE state='Karnataka'
+
+UNION ALL
+
+SELECT * FROM student
+WHERE x_per > 56.0;
+
+
+CREATE TABLE employee(
+    Eid VARCHAR(4) PRIMARY KEY,
+    Ename VARCHAR(10) NOT NULL,
+    Dept VARCHAR(10) NOT NULL,
+    Salary INT,
+    Designation VARCHAR(10) NOT NULL
+);
+
+INSERT INTO employee
+VALUES
+('E001', 'ABC', 'SALES', 25000, 'SM'),
+('E002', 'PQR', 'SALES', 35000, 'SM'),
+('E003', 'RTY', 'HRM', 58000, 'SSM'),
+('E004', 'RED', 'HRM', 38000, 'HR'),
+('E005', 'YUT', 'BDO', 25000, 'BM'),
+('E006', 'RFT', 'BDO', 48000, 'BM');
+
+SELECT * FROM employee;
+
+SELECT 'SALES', SUM(Salary) FROM employee
+WHERE Dept = 'SALES'
+
+UNION
+
+SELECT 'HRM', SUM(Salary)
+FROM employee
+WHERE Dept = 'HRM'
+
+UNION
+
+SELECT 'BDO', SUM(Salary)
+FROM employee
+WHERE Dept = 'BDO';
+
+SELECT Dept, SUM(Salary) as 'Total Salary' FROM employee
+GROUP BY Dept;
+
+SELECT Dept, Designation, COUNT(Eid) Total_emp
+FROM employee
+GROUP BY Dept, Designation;
+
+SELECT Dept, SUM(Salary) as 'Total_Salary' FROM employee
+GROUP BY Dept
+HAVING SUM(Salary) > 65000
+ORDER BY Total_Salary ASC;
+
+SELECT Dept, AVG(Salary) as 'Average_Salary' FROM employee
+GROUP BY Dept
+ORDER BY Average_Salary ASC;
+
+SELECT Dept, AVG(Salary) AS 'Average_Salary' FROM employee
+WHERE Designation LIKE "%M%"
+GROUP BY Dept
+HAVING SUM(Salary) >= 60000
+ORDER BY Average_Salary DESC;
+
+
+CREATE TABLE category(
+  cat_id INT PRIMARY KEY,
+  cat_name VARCHAR(20) NOT NULL
+);
+
+INSERT INTO category
+VALUES
+(1, 'Electronics'),
+(2, 'Stationary'),
+(3, 'Furniture'),
+(4, 'Food Items'),
+(5, 'House-keeping Goods');
+
+CREATE TABLE product(
+  pro_id INT PRIMARY KEY,
+  pro_name VARCHAR(20) NOT NULL,
+  MRP decimal(7,2),
+  MFG_DATE date NOT NULL,
+  category_id INT,
+  FOREIGN KEY(category_id) REFERENCES category(cat_id)
+);
+
+INSERT INTO product
+VALUES
+(1, 'Parker Pen', 349, '2022-06-16', 2),
+(2, 'Student Chair', 1499, '2021-12-31', 3),
+(3, 'Dark Chocolate', 399, '2022-04-30', 4),
+(4, 'Microwave Oven', 10500, '2022-05-15', 1),
+(5, 'AC', 34500, '2022-05-01', 1),
+(6, 'Footware', 599, '2022-05-01', NULL);
+
+SELECT * FROM category;
+SELECT * FROM product;
+
+SELECT * FROM category CROSS JOIN product;
+
+SELECT * 
+FROM category INNER JOIN product
+ON category.cat_id = product.category_id;
+
+SELECT *
+FROM category LEFT JOIN product
+ON category.cat_id = product.category_id;
+
+SELECT *
+FROM product RIGHT JOIN category
+ON category.cat_id = product.category_id;
+
+SELECT *
+FROM category RIGHT JOIN product
+ON category.cat_id = product.category_id;
+
+SELECT *
+FROM product LEFT JOIN category
+ON category.cat_id = product.category_id;
+
+SELECT *
+FROM category LEFT JOIN product
+ON category.cat_id = product.category_id
+
+UNION
+
+SELECT *
+FROM category RIGHT JOIN product
+ON category.cat_id = product.category_id;
+
+SELECT cat_name, pro_name, MRP
+FROM category RIGHT JOIN product
+ON category.cat_id = product.category_id
+WHERE product.MRP > 1000.00;
